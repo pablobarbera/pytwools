@@ -93,10 +93,10 @@ Counts number of tweets over time, either from a file in json format, or from a 
 python count-tweets -f tweets.json -t minute
 
 ## count tweets in a file (tweets in json format), by hour
-python count-tweets -f tweets.json -t hour
+python count-tweets.py -f tweets.json -t hour
 
 ## count tweets in a MongoDB collection, by minute
-python count-tweets -host localhost -db tweets -c example -t minute
+python count-tweets.py -host localhost -db tweets -c example -t minute
 
 ```
 
