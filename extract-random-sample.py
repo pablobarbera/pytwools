@@ -32,28 +32,6 @@ parser.add_argument('-k', required=True, type=float,
     help = 'number of tweets to sample')
 args = parser.parse_args()
 
-# function to extract random sample from file
-def parse_file(filename, p, k):
-    i = 0
-    f = open(filename, 'r')
-    tweets = []
-    for line in f:
-        i += 1
-        if i % 100000 == 0:
-            print str(i) + ' tweets processed'
-        if random.random() < p:
-            try:
-                t = json.loads(line)
-                if 'text' in t.keys():
-                    tweets.append(t)
-            except:
-                print 'Error parsing json'
-                continue
-    if int(p * i) < k:
-        k = int(p * i)
-    random.shuffle(tweets)
-    tweets = tweets[:k]
-    return(tweets)
 
 # function to extract random sample from files
 def parse_files(filenames, p, k):
@@ -77,20 +55,15 @@ def parse_files(filenames, p, k):
     if int(p * i) < k:
         k = int(p * i)
     random.shuffle(tweets)
-    tweets = tweets[:k]
+    tweets = tweets[:int(k)]
     return(tweets)
 
 
 # subsetting tweets
-if len(args.file)==1:
-    tweets = parse_file(args.file, args.p, args.k)
-
-# subsetting tweets
-if len(args.file)>1:
-    tweets = parse_files(args.file, args.p, args.k)
+tweets = parse_files(args.file, args.p, args.k)
 
 print str(len(tweets)) + ' tweets extracted'
-out = open(output, 'w')
+out = open(args.output, 'w')
 for tweet in tweets:
     out.write(json.dumps(tweet) + '\n')
 out.close()
