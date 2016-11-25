@@ -22,7 +22,7 @@ import random
 
 # arguments
 parser = argparse.ArgumentParser()
-parser.add_argument('-f', '--file', required=True,
+parser.add_argument('-f', '--file', required=True, nargs='+',
     help = 'names of files with tweets in json format')
 parser.add_argument('-o', '--output', required=True,
     help = 'name of file where sample of tweets will be stored')
@@ -90,7 +90,7 @@ if len(args.file)>1:
     tweets = parse_files(args.file, args.p, args.k)
 
 print str(len(tweets)) + ' tweets extracted'
-out = open(args.output, 'w')
+out = open(output, 'w')
 for tweet in tweets:
     out.write(json.dumps(tweet) + '\n')
 out.close()
